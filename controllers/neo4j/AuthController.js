@@ -6,7 +6,7 @@ const {	sanitizeBody} = require("express-validator");
 
 //helper file to prepare responses.
 const apiResponse = require("../../helpers/apiResponse");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 /**
