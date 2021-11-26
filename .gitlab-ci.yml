@@ -1,0 +1,15 @@
+speedrun-api:
+
+  stages: 
+    - build
+    - test
+
+  api-build-job:
+    stage: build
+    script:
+      - npm install
+
+  # test-job:
+  #   stage: test
+  #   script:
+  #     - npm run test
