@@ -1,6 +1,6 @@
 // const UserModel = require("../../models/User");
 const User = require("../../models/neo4j/User");
-// const neo4j = require("../../middlewares/neo4japi");
+const neo4j = require("../../middlewares/neo4japi");
 const {	body, validationResult } = require("express-validator");
 const {	sanitizeBody} = require("express-validator");
 
@@ -17,74 +17,74 @@ const jwt = require("jsonwebtoken");
  *
  * @returns {Object}
  */
-// exports.register = [
-// 	// Validate fields.
+exports.register = [
+	// Validate fields.
 
-// 	//Validating username
-// 	body("username").isLength({
-// 		min: 1
-// 	}).trim().withMessage("Username must be specified.")
+	//Validating username
+	body("username").isLength({
+		min: 1
+	}).trim().withMessage("Username must be specified.")
 
-// 		.custom((value) => {
-// 			return neo4j.searchUserByUsername(value).then((user) => {
-// 				if (user) {
-// 					return Promise.reject("Username already in use");
-// 				}
-// 			});
-// 		}),
+		.custom((value) => {
+			return neo4j.searchUserByUsername(value).then((user) => {
+				if (user) {
+					return Promise.reject("Username already in use");
+				}
+			});
+		}),
 
-// 	//Validating password
-// 	body("password").isLength({
-// 		min: 1
-// 	}).trim().withMessage("Password must be 6 characters or greater."),
+	//Validating password
+	body("password").isLength({
+		min: 1
+	}).trim().withMessage("Password must be 6 characters or greater."),
 
-// 	// Sanitize fields.
-// 	sanitizeBody("password").escape(),
+	// Sanitize fields.
+	sanitizeBody("password").escape(),
 
-// 	// Process request after validation and sanitization.
-// 	(req, res) => {
-// 		try {
-// 			console.log(req.body);
+	// Process request after validation and sanitization.
+	(req, res) => {
+		try {
+			console.log(req.body);
 
-// 			// Extract the validation errors from a request.
-// 			const errors = validationResult(req);
-// 			if (!errors.isEmpty()) {
-// 				// Display sanitized values/errors messages.
-// 				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
-// 			} else {
-// 				//hash input password
-// 				bcrypt.hash(req.body.password, 10, function (err, hash) {
+			// Extract the validation errors from a request.
+			const errors = validationResult(req);
+			if (!errors.isEmpty()) {
+				// Display sanitized values/errors messages.
+				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
+			} else {
+				//hash input password
+				bcrypt.hash(req.body.password, 10, function (err, hash) {
 
-// 					// Create User object with escaped and trimmed data
-// 					var user = new User(req.body.username, hash);
+					// Create User object with escaped and trimmed data
+					var user = new User(req.body.username, hash);
 
-// 					neo4j.addUser(user).then((user) => {
-// 						user = user.properties;
-// 						let userData = {
-// 							username: user.username,
-// 							password: hash
-// 						};
-// 						// console.log(user)
-// 						return apiResponse.successResponseWithData(res, "Registration Success.", userData);
-// 					}).catch((err) => {
-// 						if (err) {
-// 							console.log(err);
-// 							return apiResponse.ErrorResponse(res, err);
-// 						}
-// 					});
+					neo4j.addUser(user).then((user) => {
+						user = user.properties;
+						let userData = {
+							username: user.username,
+							password: hash
+						};
+						// console.log(user)
+						return apiResponse.successResponseWithData(res, "Registration Success.", userData);
+					}).catch((err) => {
+						if (err) {
+							console.log(err);
+							return apiResponse.ErrorResponse(res, err);
+						}
+					});
 
-// 					// }).catch(err => {
-// 					// 	console.log(err);
-// 					// 	return apiResponse.ErrorResponse(res,err);
-// 					// }) ;
-// 				});
-// 			}
-// 		} catch (err) {
-// 			//throw error in json response with status 500.
-// 			return apiResponse.ErrorResponse(res, err);
-// 		}
-// 	}
-// ];
+					// }).catch(err => {
+					// 	console.log(err);
+					// 	return apiResponse.ErrorResponse(res,err);
+					// }) ;
+				});
+			}
+		} catch (err) {
+			//throw error in json response with status 500.
+			return apiResponse.ErrorResponse(res, err);
+		}
+	}
+];
 
 /**
  * User login.
@@ -94,56 +94,56 @@ const jwt = require("jsonwebtoken");
  *
  * @returns {Object}
  */
-// exports.login = [
-// 	body("username").isLength({
-// 		min: 1
-// 	}),
-// 	body("password").isLength({
-// 		min: 1
-// 	}).trim().withMessage("Password must be specified."),
-// 	sanitizeBody("username").escape(),
-// 	sanitizeBody("password").escape(),
-// 	(req, res) => {
-// 		try {
-// 			const errors = validationResult(req);
-// 			if (!errors.isEmpty()) {
-// 				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
-// 			} else {
+exports.login = [
+	body("username").isLength({
+		min: 1
+	}),
+	body("password").isLength({
+		min: 1
+	}).trim().withMessage("Password must be specified."),
+	sanitizeBody("username").escape(),
+	sanitizeBody("password").escape(),
+	(req, res) => {
+		try {
+			const errors = validationResult(req);
+			if (!errors.isEmpty()) {
+				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
+			} else {
 
-// 				neo4j.searchUserByUsername(req.body.username).then(user => {
-// 					if (user) {
+				neo4j.searchUserByUsername(req.body.username).then(user => {
+					if (user) {
 
-// 						//Compare given password with db's hash.
-// 						bcrypt.compare(req.body.password, user.password, function (err, same) {
-// 							if (same) {
+						//Compare given password with db's hash.
+						bcrypt.compare(req.body.password, user.password, function (err, same) {
+							if (same) {
 								
-// 								let userData = {
-// 										username: user.username
-// 								};
-// 								//Prepare JWT token for authentication
-// 								const jwtPayload = userData;
-// 								const jwtData = {
-// 									expiresIn: process.env.JWT_TIMEOUT_DURATION,
-// 								};
-// 								const secret = process.env.JWT_SECRET;
-// 								//Generated JWT token with Payload and secret.
-// 								userData.token = jwt.sign(jwtPayload, secret, jwtData);
-// 								return apiResponse.successResponseWithData(res, "Login Success.", userData);
+								let userData = {
+										username: user.username
+								};
+								//Prepare JWT token for authentication
+								const jwtPayload = userData;
+								const jwtData = {
+									expiresIn: process.env.JWT_TIMEOUT_DURATION,
+								};
+								const secret = process.env.JWT_SECRET;
+								//Generated JWT token with Payload and secret.
+								userData.token = jwt.sign(jwtPayload, secret, jwtData);
+								return apiResponse.successResponseWithData(res, "Login Success.", userData);
 									
-// 							} else {
-// 								return apiResponse.unauthorizedResponse(res, "Username or Password wrong.");
-// 							}
-// 						});
-// 					} else {
-// 						return apiResponse.unauthorizedResponse(res, "Username or Password wrong.");
-// 					}
-// 				});
-// 			}
-// 		} catch (err) {
-// 			return apiResponse.ErrorResponse(res, err);
-// 		}
-// 	}
-// ];
+							} else {
+								return apiResponse.unauthorizedResponse(res, "Username or Password wrong.");
+							}
+						});
+					} else {
+						return apiResponse.unauthorizedResponse(res, "Username or Password wrong.");
+					}
+				});
+			}
+		} catch (err) {
+			return apiResponse.ErrorResponse(res, err);
+		}
+	}
+];
 
 // /**
 //  * Change password
