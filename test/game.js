@@ -3,7 +3,7 @@ const {
     chai,
     server,
 } = require("./testConfig")
-var constants = require("../helpers/constants").tesConstants;
+var constants = require("../helpers/constants").testConstants;
 
 /**
  * Test cases to test all the game APIs
@@ -37,20 +37,20 @@ describe('Game', () => {
      * Test the /POST route
      * Should succeed
      */
-    describe("/POST game store", () => {
-        it('Should store game'), (done) => {
-            chai.request(server)
-                .post("/api/game")
-                .send(testData)
-                // .set("Content-Type", "application/json")
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.have.propery('message').eql('Game posted successfully.');
-                    constants.gameId = res.body.data._id;
-                })
-            
-        }
-    })
+    describe("/POST game Store", () => {
+		it("Should store the game", (done) => {
+			chai.request(server)
+				.post("/api/game")
+				.send(testData)
+				.set("Authorization", "Bearer " + constants.jwt)
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.should.have.property("message").eql("Game posted successfully.");
+					constants.gameId = res.body.data._id;
+					done();
+				});
+		});
+	});
 
     /**
      * Test the /GET route
@@ -63,7 +63,7 @@ describe('Game', () => {
 				// .set("Authorization", "Bearer " + constants.jwt)
 				.end((err, res) => {
 					res.should.have.status(200);
-					res.body.should.have.property("message").eql("Operation success");
+					res.body.should.have.property("message").eql("Operation Success");
 					done();
 				});
 		});
@@ -111,7 +111,7 @@ describe('Game', () => {
 	describe("/DELETE/:id game", () => {
 		it("Should DELETE the game", (done) => {
 			chai.request(server)
-				.delete("/api/thread/" + constants.threadId)
+				.delete("/api/game/" + constants.gameId)
 				// .set("Authorization", "Bearer " + constants.jwt)
 				.end((err, res) => {
 					res.should.have.status(200);

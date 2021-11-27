@@ -1,5 +1,5 @@
-exports.testconstants = {
+exports.testConstants = {
 	jwt: "",
-	threadId: "",
-	commentId: ""
+	gameId: "",
+	runId: ""
 };
