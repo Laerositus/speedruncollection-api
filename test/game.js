@@ -42,7 +42,6 @@ describe('Game', () => {
 			chai.request(server)
 				.post("/api/game")
 				.send(testData)
-				.set("Authorization", "Bearer " + constants.jwt)
 				.end((err, res) => {
 					res.should.have.status(200);
 					res.body.should.have.property("message").eql("Game posted successfully.");
