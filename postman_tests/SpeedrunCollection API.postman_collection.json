@@ -1,0 +1,824 @@
+{
+	"info": {
+		"_postman_id": "edf0c0ce-9725-4a22-b4d6-5e01f98a0f7b",
+		"name": "SpeedrunCollection API",
+		"description": "Nosql-END project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "laero",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "AndersIsOokOke",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register?=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "Piet",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "AndersIsNietOke",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register?=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"jwt\", jsonData.data.token);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "laero",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "AndersIsOokOke",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"passwordNew\", \"password12345\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"password1\", pm.collectionVariables.get(\"passwordNew\"));",
+									"pm.collectionVariables.unset(\"passwordNew\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "{{email1}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password1}}",
+									"type": "text"
+								},
+								{
+									"key": "newPassword",
+									"value": "{{passwordNew}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "{{email1}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password1}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create friendship",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email1",
+									"value": "{{email1}}",
+									"type": "text"
+								},
+								{
+									"key": "email2",
+									"value": "{{email2}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/friendship",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"friendship"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete friendship",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email1",
+									"value": "{{email1}}",
+									"type": "text"
+								},
+								{
+									"key": "email2",
+									"value": "{{email2}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/friendship",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"friendship"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email1",
+									"value": "{{email1}}",
+									"type": "text"
+								},
+								{
+									"key": "email2",
+									"value": "{{email2}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/friendship",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"friendship"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Game",
+			"item": [
+				{
+					"name": "Game Store",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Dark Souls V\",\r\n    \"platforms\": [\"PS4\"],\r\n    \"releaseDate\": \"20-02-16\",\r\n    \"image\": \"https://upload.wikimedia.org/wikipedia/en/thumb/b/bb/Dark_souls_3_cover_art.jpg/220px-Dark_souls_3_cover_art.jpg\",\r\n    \"categories\": [{\"name\": \"Any%\", \"categoryRule\": \"Run ends at defeat of Soul of Cinder\"}, {\"name\": \"100%\", \"categoryRule\": \"Run ends at collection of last item\"}],\r\n    \"totalRuns\": 2,\r\n    \"playerCount\": 1,\r\n    \"gameRule\": \"Run starts at selection of New Game\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/game",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Game List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/game",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Game Detail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{jwt}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/game/{{gameId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"game",
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Game Update",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"platforms\": [\"PS4\", \"PS5\", \"Windows\", \"Xbox One\", \"Xbox Series X\"],\r\n    \"categories\": [\r\n        {\r\n            \"name\": \"Any%\",\r\n            \"categoryRule\": \"Run starts at selection of New Game\"\r\n        },\r\n        {\r\n            \"name\": \"100%\",\r\n            \"categoryRule\": \"Run starts at selection of New Game\"\r\n        },\r\n        {\r\n            \"name\": \"AllBosses%\",\r\n            \"categoryRule\": \"Run starts at selection of New Game\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/game/61a0b36cc3dd55001624b7fc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"game",
+								"61a0b36cc3dd55001624b7fc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Game Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{jwt}}",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/game/619d0327f44fcc7e0475d1cd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"game",
+								"619d0327f44fcc7e0475d1cd"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Run",
+			"item": [
+				{
+					"name": "Run Store at Game",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{jwt}}",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"game\": {\r\n        \"name\": \"Dark Souls III\"\r\n    },\r\n    \"category\": {\r\n        \"name\": \"100%\"\r\n    },\r\n    \"platform\": \"PS4\",\r\n    \"time\": \"06h15m06s\",\r\n    \"user\": {\r\n        \"username\": \"Laerositus\"\r\n    },\r\n    \"placement\": 3,\r\n    \"videoLink\": \"https:www.youtube.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/run/{{gameId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"run",
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Run List From Game",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/run/{{gameId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"run",
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Runs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/runs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"runs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Run Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/run/{{runId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"run",
+								"{{runId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Run Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{jwt}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/run/{{runId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"run",
+								"{{runId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "61a4171f-302d-4aa0-9dcc-b5028d261a30",
+			"key": "email1",
+			"value": "geertjanknoops123456789@hotmail.com"
+		},
+		{
+			"id": "09007842-3645-496b-936b-568abeb77a8e",
+			"key": "email2",
+			"value": "pietfloepjes123456789@ziggo.nl"
+		},
+		{
+			"id": "e5ad7699-f290-4941-aa36-f2ca1367ab92",
+			"key": "password1",
+			"value": "password12345"
+		},
+		{
+			"id": "a1a1a1cb-6a1f-484e-9024-211f54d73c51",
+			"key": "password2",
+			"value": "password1234"
+		},
+		{
+			"id": "d1bd5fd1-2bd3-4fa0-ab92-781472e6e01c",
+			"key": "jwt",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJHZXJ0amFuIiwibGFzdE5hbWUiOiJLbm9vcHMiLCJlbWFpbCI6ImdlZXJ0amFua25vb3BzMTIzNDU2Nzg5QGhvdG1haWwuY29tIiwiaWF0IjoxNjE0NzgxMjEzLCJleHAiOjE2MTQ4MjQ0MTN9.k7OTOVu32TotskPFOGKgawbfYT0wBT9WcPfq1ogyy6w"
+		},
+		{
+			"id": "f4fa5f6f-7a3a-4598-9625-a8afa1a6cb71",
+			"key": "threadid",
+			"value": "603f9b2f64e0d35ee4a0f1a8"
+		},
+		{
+			"id": "2f6af418-1489-422f-bd97-8765b2a1bb59",
+			"key": "commentid",
+			"value": "603f99de64e0d35ee4a0f1a7"
+		}
+	]
+}
