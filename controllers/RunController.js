@@ -93,6 +93,23 @@ exports.runList = [
 	}
 ];
 
+exports.runsList = [
+	function (req, res) {
+		try {
+			Run.find({}, "_id game platform user time placement category videoLink").then((games) => {
+				if (games.length > 0){
+					// console.log(games);
+					return apiResponse.successResponseWithData(res, "Operation Success", games);
+				}else {
+					return apiResponse.successResponseWithData(res, "Operation Success");
+				}
+			});
+		} catch (err) {
+			return apiResponse.ErrorResponse(res, err);
+		}
+	}
+]
+
 exports.runDetail = [
 	function (req, res) {
 		if(!mongoose.Types.ObjectId.isValid(req.params.id)) {

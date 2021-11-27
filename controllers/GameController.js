@@ -111,41 +111,43 @@ exports.gameUpdate = [
 	(req, res) => {
 		try {
 			const errors = validationResult(req);
-			var game = new Game({
-				_id: req.params.id,
-				name: req.body.name,
-				platforms: req.body.platforms,
-				releaseDate: req.body.releaseDate,
-				totalRuns: req.body.totalRuns,
-				playerCount: req.body.playerCount,
-				categories: req.body.categories,
-				gameRule: req.body.gameRule,
-				image: req.body.image
-			});
+			if(req.body.platforms !=[]){
+				var game = new Game({
+					_id: req.params.id,
+					name: req.body.name,
+					platforms: req.body.platforms,
+					releaseDate: req.body.releaseDate,
+					totalRuns: req.body.totalRuns,
+					playerCount: req.body.playerCount,
+					categories: req.body.categories,
+					gameRule: req.body.gameRule,
+					image: req.body.image
+				});
 
-			if (!errors.isEmpty()) {
-				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
-			} else {
-				if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-					return apiResponse.validationErrorWithData(res, "Invalid Error.", "Invalid ID");
+				if (!errors.isEmpty()) {
+					return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
 				} else {
-					Game.findById(req.params.id, function (err, foundGame) {
-						if (foundGame === null) {
-							return apiResponse.noContentResponse(res, "Game does not exist with this id");
-						} else {							
-							//Update game.
-							console.log(game)
-							Game.findByIdAndUpdate(req.params.id, game, {}, function (err) {								
-								if (err) {
-									return apiResponse.ErrorResponse(res, err);
-								} else {
-									// console.log(game);
-									let gameData = new GameData(game);
-									return apiResponse.successResponseWithData(res, "Game updated succesfully.", gameData);
-								}
-							});				
-						}
-					});
+					if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+						return apiResponse.validationErrorWithData(res, "Invalid Error.", "Invalid ID");
+					} else {
+						Game.findById(req.params.id, function (err, foundGame) {
+							if (foundGame === null) {
+								return apiResponse.noContentResponse(res, "Game does not exist with this id");
+							} else {							
+								//Update game.
+								console.log(game)
+								Game.findByIdAndUpdate(req.params.id, game, {}, function (err) {								
+									if (err) {
+										return apiResponse.ErrorResponse(res, err);
+									} else {
+										// console.log(game);
+										let gameData = new GameData(game);
+										return apiResponse.successResponseWithData(res, "Game updated succesfully.", gameData);
+									}
+								});				
+							}
+						});
+					}
 				}
 			}
 		} catch (err) {
