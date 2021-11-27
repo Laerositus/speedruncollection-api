@@ -2,6 +2,14 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: Node.js CI
+env:
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  JWT_TIMEOUT_DURATION: ${{ secrets.JWT_TIMEOUT_DURATION }}
+  JWT_TOKEN_TEST: ${{ secrets.JWT_TOKEN_TEST }}
+  MONGODB_URL: ${{ secrets.MONGODB_URL }}
+  NEO4J_PW: ${{ secrets.NEO4J_PW }}
+  NEO4J_URL: ${{ secrets.NEO4J_URL }}
+  NEO4J_USR: ${{ secrets.NEO4J_USR }}
 
 on:
   push:
@@ -16,7 +24,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -28,4 +36,4 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    # - run: npm run test
+    - run: npm run test
