@@ -135,7 +135,7 @@ exports.gameUpdate = [
 								return apiResponse.noContentResponse(res, "Game does not exist with this id");
 							} else {							
 								//Update game.
-								console.log(game)
+								// console.log(game)
 								Game.findByIdAndUpdate(req.params.id, game, {}, function (err) {								
 									if (err) {
 										return apiResponse.ErrorResponse(res, err);

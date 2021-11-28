@@ -1,5 +1,5 @@
 process.env.NODE_ENV = "test";
-process.env.MONGODB_URL = "mongodb://127.0.0.1:27017/speedruncollection-test";
+process.env.MONGODB_URL = "mongodb+srv://Laerositus:G7r1B=Hp=$(v@laerositus.jowup.mongodb.net/speedruncollection-test?retryWrites=true&w=majority";
 
 //Require the dev-dependencies
 let chai = require("chai");

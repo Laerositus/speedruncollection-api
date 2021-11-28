@@ -4,4 +4,4 @@ const {
     chai,
     server,
 } = require("./testConfig")
-var constants = require("../helpers/constants").tesConstants;
+var constants = require("../helpers/constants").testConstants;
