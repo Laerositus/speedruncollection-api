@@ -70,9 +70,8 @@ exports.gameStore = [
 exports.gameList = [
 	function (req, res) {
 		try {
-			Game.find({}, "_id name platforms image releaseDate ").then((games) => {
+			Game.find({}, "_id name platforms image releaseDate categories totalRuns playerCount gameRule").then((games) => {
 				if (games.length > 0){
-					// console.log(games);
 					return apiResponse.successResponseWithData(res, "Operation Success", games);
 				}else {
 					return apiResponse.successResponseWithData(res, "Operation Success");
