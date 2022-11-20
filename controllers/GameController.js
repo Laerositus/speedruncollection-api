@@ -14,8 +14,8 @@ const Game = require("../models/Game");
 
 function GameData(data) {
 	this._id = data._id;
-    this.name = data.name;
-    this.releaseDate = data.releaseDate;
+	this.name = data.name;
+	this.releaseDate = data.releaseDate;
 	this.platforms = data.platforms;
 	this.totalRuns = data.totalRuns;
 	this.playerCount = data.playerCount;
@@ -63,8 +63,8 @@ exports.gameStore = [
 			console.log(err);
 			//Throw error in json response with status 500. 
 			return apiResponse.ErrorResponse(res, err);
-	    }
-    }
+		}
+	}
 ];
 
 exports.gameList = [
@@ -85,6 +85,7 @@ exports.gameList = [
 
 exports.gameDetail = [
 	function (req, res) {
+		console.log(req.params.id);
 		if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
 			return apiResponse.validationErrorWithData(res, "Invalid Game ID", {});
 		}
@@ -98,7 +99,7 @@ exports.gameDetail = [
 				} else {
 					return apiResponse.noContentResponse(res, "Game does not exist with this id");
 				}
-			})
+			});
 		} catch (err) {
 			return apiResponse.ErrorResponse(res, err);
 		}
@@ -123,6 +124,7 @@ exports.gameUpdate = [
 					image: req.body.image
 				});
 
+				console.log(game);
 				if (!errors.isEmpty()) {
 					return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
 				} else {
@@ -143,7 +145,7 @@ exports.gameUpdate = [
 										let gameData = new GameData(game);
 										return apiResponse.successResponseWithData(res, "Game updated succesfully.", gameData);
 									}
-								});				
+								});
 							}
 						});
 					}
@@ -171,15 +173,15 @@ exports.gameDelete = [
 					// if (foundGame.user.toString() !== req.user.email) {
 					// 	return apiResponse.unauthorizedResponse(res, "You are not authorized to do this operation.");
 					// } else {
-						//Delete game.
-						Game.findByIdAndRemove(req.params.id, function (err, game) {
-							if (err) {
-								return apiResponse.ErrorResponse(res, err);
-							} else {
-								game.remove();
-								return apiResponse.successResponse(res, "Game deleted successfully.");
-							}
-						});
+					//Delete game.
+					Game.findByIdAndRemove(req.params.id, function (err, game) {
+						if (err) {
+							return apiResponse.ErrorResponse(res, err);
+						} else {
+							game.remove();
+							return apiResponse.successResponse(res, "Game deleted successfully.");
+						}
+					});
 					// }
 				}
 			});
@@ -188,4 +190,4 @@ exports.gameDelete = [
 			return apiResponse.ErrorResponse(res, err);
 		}
 	}
-]
+];

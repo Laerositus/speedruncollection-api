@@ -1,10 +1,9 @@
-const neo4j = require("neo4j-driver").v1;
+const neo4j = require("neo4j-driver");
 const User = require("../models/neo4j/User");
-// import
 
 var driver = neo4j.driver(
 	process.env.NEO4J_URL,
-	neo4j.auth.basic(process.env.NEO4J_USR, process.env.NEO4J_PW)
+	neo4j.auth.basic(process.env.NEO4J_RemoteUSR, process.env.NEO4J_RemotePW)
 );
 
 // Create a session to run Cypher statements in.
@@ -12,13 +11,18 @@ var driver = neo4j.driver(
 var session = driver.session();
 
 exports.searchUserByUsername = function searchUserByUsername(username) {
+	console.log("searchUserByUsername => \n");
 	return new Promise((resolve, reject) => {
 		var query = 
 			`MATCH (user:User {username: "${username}"}) 
 			RETURN user`;
 			
+		var session = driver.session();
+
+		console.log("Session is open: " + session._open);
 		session
 			.run(query)
+
 			.then((result) => {
 				session.close();
 
@@ -34,10 +38,13 @@ exports.searchUserByUsername = function searchUserByUsername(username) {
 				session.close();
 				reject(error);
 			});
-	});
+		});
+
 };
 
 exports.addUser = function addUser(user) {
+	console.log("AddUser => \n");
+	var session = driver.session();
 	return new Promise((resolve, reject) => {
 		var query = 
 			`MERGE (user:User {
@@ -60,5 +67,6 @@ exports.addUser = function addUser(user) {
 				session.close();
 				reject(error);
 			});
-	});
+		});
 };
+

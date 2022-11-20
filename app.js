@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //To allow cross-origin requests
 app.use(cors());
-app.options('*',cors());
+app.options("*",cors());
 
 //Route prefixes
 app.use("/", indexRouter);

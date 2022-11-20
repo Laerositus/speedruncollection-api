@@ -14,13 +14,10 @@
         "ecmaVersion": 2018
     },
     "rules": {
-        "indent": [
-            "error",
-            "tab"
-        ],
+        "indent": "off",
         "linebreak-style": [
             "error",
-            "unix"
+            "windows"
         ],
         "quotes": [
             "error",
@@ -29,6 +26,7 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "no-unused-vars": "off"
     }
 }
