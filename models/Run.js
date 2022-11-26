@@ -8,31 +8,18 @@ var Schema = mongoose.Schema;
 
 var RunSchema = new Schema({
 	game: {
-		type: Game.schema,
-		default: {},
+		type: Schema.Types.ObjectId, ref: "Game"
 	},
-	category: {
-		type: Category.schema,
-		default: {},
-	},
-	time: {
-		type: String,
-	},
+	category: Category.schema,
+	time: String,
 	platform: {
-		type: Platform.schema,
-		default: {},
+		type: Platform.schema
 	},
 	user: {
-		type: User.schema,
-		default: {},
+		type: Schema.Types.ObjectId, ref: "User",
 	},
-	placement: {
-		type: Number,
-	},
-	videoLink: {
-		type: String,
-	}
-
+	placement: Number,
+	videoLink: String
 });
 
 module.exports = mongoose.model("Run", RunSchema);

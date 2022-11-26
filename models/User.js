@@ -1,6 +1,8 @@
 var mongoose = require("mongoose");
 var Game = require("./Game");
 
+const Schema = mongoose.Schema;
+
 var UserSchema = new mongoose.Schema({
 	username: String,
 	totalRuns: Number,

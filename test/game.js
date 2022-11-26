@@ -1,8 +1,8 @@
-const Game = require("../models/Game")
+const Game = require("../models/Game");
 const { 
     chai,
     server,
-} = require("./testConfig")
+} = require("./testConfig");
 var constants = require("../helpers/constants").testConstants;
 
 /**
@@ -15,23 +15,23 @@ var constants = require("../helpers/constants").testConstants;
  * (5) Delete game
  */
 
-describe('Game', () => {
+describe("Game", () => {
     before((done) => {
         Game.deleteMany({}, () => {
             done();
-        })
-    })
+        });
+    });
 
     const testData = {
         "name": "This is a test game",
-        "platforms": ["testPlatform"],
+        "platforms": [{"name": "testGame", "releaseDate": "0000-00-00"}],
         "releaseDate": "00-00-0000",
         "image": "https://www.google.nl/images/branding/googlelogo/2x/googlelogo_color_160x56dp.png",
         "categories": [{"name": "testCategory", "categoryRule": "testRule"}, {"name": "testCategory2", "categoryRule": "testRule2"}],
         "totalRuns": 0,
         "playerCount": 0,
         "gameRule": "testRule"
-    }
+    };
 
     /**
      * Test the /POST route
@@ -119,4 +119,4 @@ describe('Game', () => {
 				});
 		});
 	});
-})
+});
