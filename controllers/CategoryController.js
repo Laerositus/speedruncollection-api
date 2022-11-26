@@ -50,6 +50,6 @@ exports.categoryStore = [
 		} catch (err) {
 			//Throw error in json response with status 500. 
 			return apiResponse.ErrorResponse(res, err);
-	    }
+		}
     }
 ];

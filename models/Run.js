@@ -1,21 +1,30 @@
 var mongoose = require("mongoose");
+const Platform = require("./Platform");
+const User = require("./User");
+const Game = require("./Game");
+const Category = require("./Category");
 
 var Schema = mongoose.Schema;
 
 var RunSchema = new Schema({
 	game: {
-		_id: String,
-		name: String
+		type: Game.schema,
+		default: {},
 	},
 	category: {
-		name: String
+		type: Category.schema,
+		default: {},
 	},
 	time: {
 		type: String,
 	},
-	platform: String,
+	platform: {
+		type: Platform.schema,
+		default: {},
+	},
 	user: {
-		username: String
+		type: User.schema,
+		default: {},
 	},
 	placement: {
 		type: Number,

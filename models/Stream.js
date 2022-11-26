@@ -1,21 +1,24 @@
 var mongoose = require("mongoose");
-const userSchema = require("./User");
-const gameSchema = require("./Game");
-const categorySchema = require("./Category");
+const User = require("./User");
+const Game = require("./Game");
+const Category = require("./Category");
 
 var Schema = mongoose.Schema;
 
 var StreamSchema = new Schema({
 	user: {
-		type: userSchema,
+		type: User.schema,
+		default: {},
 		required: true,
 	},
 	game: {
-		type: gameSchema,
+		type: Game.schema,
+		default: {},
 		required: true,
 	},
 	category: {
-		type: categorySchema,
+		type: Category.schema,
+		default: {},
 		required: true,
 	},
 	startTime: {
@@ -32,4 +35,5 @@ var StreamSchema = new Schema({
 	},
 	thumbnail: String
 });
+
 module.exports = mongoose.model("Stream", StreamSchema);

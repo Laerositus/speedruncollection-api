@@ -1,5 +1,4 @@
 var mongoose = require("mongoose");
-const gameSchema = require("./Game");
 
 var Schema = mongoose.Schema;
 
@@ -8,10 +7,9 @@ const PlatformSchema = new Schema({
 		type: String,
 		required: true
 	},
-	games: [{
-		type: mongoose.Schema.ObjectId,
-		ref: "Game"
-	}]
+	releaseDate: {
+		type: Date,
+	}
 });
 
 module.exports = mongoose.model("Platform", PlatformSchema);
