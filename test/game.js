@@ -23,15 +23,19 @@ describe("Game", () => {
     });
 
     const testData = {
-        "name": "This is a test game",
-        "platforms": [{"name": "testGame", "releaseDate": "0000-00-00"}],
-        "releaseDate": "00-00-0000",
-        "image": "https://www.google.nl/images/branding/googlelogo/2x/googlelogo_color_160x56dp.png",
-        "categories": [{"name": "testCategory", "categoryRule": "testRule"}, {"name": "testCategory2", "categoryRule": "testRule2"}],
-        "totalRuns": 0,
-        "playerCount": 0,
-        "gameRule": "testRule"
-    };
+		"platforms": [{"_id": "6378ade1ba4eda3abcd41d91"}],
+		"name": "TestGame",
+		"gameRule": "Testing Rule",
+		"totalRuns": 0,
+		"playerCount": 0,
+		"categories": [
+			{
+				"name": "Test%",
+				"categoryRule": "Run starts at selection of Test Game"
+			},
+		],
+		"image": ""
+	};
 
     /**
      * Test the /POST route

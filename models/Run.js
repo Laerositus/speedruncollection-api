@@ -10,10 +10,12 @@ var RunSchema = new Schema({
 	game: {
 		type: Schema.Types.ObjectId, ref: "Game"
 	},
-	category: Category.schema,
+	category: {
+		type: Schema.Types.ObjectId, ref: "Category"
+	},
 	time: String,
 	platform: {
-		type: Platform.schema
+		type: Schema.Types.ObjectId, ref: "Platform"
 	},
 	user: {
 		type: Schema.Types.ObjectId, ref: "User",
