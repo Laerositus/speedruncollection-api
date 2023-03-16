@@ -67,6 +67,27 @@ exports.addUser = function addUser(user) {
 				session.close();
 				reject(error);
 			});
-		});
+	});
+};
+
+exports.deleteUser = function deleteUser(user) {
+	console.log("DeleteUser => \n");
+	var session = driver.session();
+	return new Promise((resolve, reject) => {
+		var query =
+			`MATCH (user:User {
+				username: "${user.username}"			
+			}) DELETE user`;
+
+		session
+			.run(query)
+			.then((result) => {
+				session.close();
+			}).catch((error) => {
+				console.log(error);
+				session.close();
+				reject(error);
+			});
+	});
 };
 

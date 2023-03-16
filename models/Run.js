@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 const Platform = require("./Platform");
-const User = require("./User");
+const User = require("./Player");
 const Game = require("./Game");
 const Category = require("./Category");
 

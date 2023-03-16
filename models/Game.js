@@ -10,7 +10,8 @@ var GameSchema = new Schema({
 		type: String
 	},
 	platforms: [{
-		type: Schema.Types.ObjectId, ref: "Platform"
+		type: Schema.Types.ObjectId, ref: "Platform",
+		name: String,
 	}],
 	releaseDate: Date,
 	totalRuns: Number,
@@ -20,7 +21,7 @@ var GameSchema = new Schema({
 	}],
 	gameRule: String,
 	runs: [{
-		type: Schema.Types.ObjectId, ref: "Category",
+		type: Schema.Types.ObjectId, ref: "Run",
 	}],
 	image: String
 });
