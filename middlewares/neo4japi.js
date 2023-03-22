@@ -3,7 +3,7 @@ const User = require("../models/neo4j/User");
 
 var driver = neo4j.driver(
 	process.env.NEO4J_URL,
-	neo4j.auth.basic(process.env.NEO4J_RemoteUSR, process.env.NEO4J_RemotePW)
+	neo4j.auth.basic(process.env.NEO4J_USR, process.env.NEO4J_PW)
 );
 
 // Create a session to run Cypher statements in.
