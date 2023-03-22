@@ -1,5 +1,6 @@
 exports.testConstants = {
 	jwt: "",
 	gameId: "",
-	runId: ""
+	runId: "",
+	platformId: "",
 };

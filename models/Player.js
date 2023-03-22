@@ -1,7 +1,9 @@
 var mongoose = require("mongoose");
 var Game = require("./Game");
 
-var UserSchema = new mongoose.Schema({
+const Schema = mongoose.Schema;
+
+var PlayerSchema = new mongoose.Schema({
 	username: String,
 	totalRuns: Number,
 	creationDate: Date,
@@ -11,5 +13,5 @@ var UserSchema = new mongoose.Schema({
 	youtube: String
 });
 
-module.exports = UserSchema;
-module.exports = mongoose.model("User", UserSchema);
+module.exports = PlayerSchema;
+module.exports = mongoose.model("Player", PlayerSchema);

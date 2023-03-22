@@ -2,19 +2,19 @@ var express = require("express");
 var authRouter = require("./auth");
 var categoryRouter = require("./category");
 var runRouter = require("./run");
-var runsRouter = require("./runs");
 var streamRouter = require("./stream");
 var gameRouter = require("./game");
 var platformRouter = require("./platform");
+var playerRouter = require("./player");
 
 var app = express();
 
 app.use("/auth/", authRouter);
 app.use("/category/", categoryRouter);
 app.use("/run/", runRouter);
-app.use("/runs/", runsRouter);
 app.use("/stream/", streamRouter);
 app.use("/game/", gameRouter);
 app.use("/platform/", platformRouter);
+app.use("/player/", playerRouter);
 
 module.exports = app;

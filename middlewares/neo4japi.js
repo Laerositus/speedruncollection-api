@@ -3,7 +3,7 @@ const User = require("../models/neo4j/User");
 
 var driver = neo4j.driver(
 	process.env.NEO4J_URL,
-	neo4j.auth.basic(process.env.NEO4J_RemoteUSR, process.env.NEO4J_RemotePW)
+	neo4j.auth.basic(process.env.NEO4J_USR, process.env.NEO4J_PW)
 );
 
 // Create a session to run Cypher statements in.
@@ -67,6 +67,27 @@ exports.addUser = function addUser(user) {
 				session.close();
 				reject(error);
 			});
-		});
+	});
+};
+
+exports.deleteUser = function deleteUser(user) {
+	console.log("DeleteUser => \n");
+	var session = driver.session();
+	return new Promise((resolve, reject) => {
+		var query =
+			`MATCH (user:User {
+				username: "${user.username}"			
+			}) DELETE user`;
+
+		session
+			.run(query)
+			.then((result) => {
+				session.close();
+			}).catch((error) => {
+				console.log(error);
+				session.close();
+				reject(error);
+			});
+	});
 };
 

@@ -9,27 +9,17 @@ var GameSchema = new Schema({
 	name: {
 		type: String
 	},
-	platforms: {
-		type: [Platform.schema],
-	},
-	releaseDate: {
-		type: Date,
-	},
-	totalRuns: {
-		type: Number,
-	},
-	playerCount: {
-		type: Number,
-	},
-	categories: {
-		type: [Category.schema], 
-	},
-	gameRule: { 
-		type: String,
-	},
-	runs: {
-		type: [Run.schema],
-	},
+	platforms: [ String ],
+	releaseDate: Date,
+	totalRuns: Number,
+	playerCount: Number,
+	categories: [{
+		type: Category.schema
+	}],
+	gameRule: String,
+	runs: [{
+		type: Schema.Types.ObjectId, ref: "Run",
+	}],
 	image: String
 });
 

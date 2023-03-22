@@ -18,8 +18,6 @@ const jwt = require("jsonwebtoken");
  * @returns {Object}
  */
 exports.register = [
-	// Validate fields.
-
 	//Validating username
 	body("username").isLength({
 		min: 1
@@ -138,6 +136,46 @@ exports.login = [
 						return apiResponse.unauthorizedResponse(res, "Username or Password wrong.");
 					}
 				});
+			}
+		} catch (err) {
+			return apiResponse.ErrorResponse(res, err);
+		}
+	}
+];
+
+/**
+ * User Delete
+ * 
+ * @param {string}      username
+ * @param {string}      password
+ */
+
+exports.delete = [
+	body("username").isLength({
+		min: 1
+	}),
+	body("password").isLength({
+		min: 1
+	}).trim().withMessage("Password must be specified."),
+	sanitizeBody("username").escape(),
+	sanitizeBody("password").escape(),
+	(req, res) => {
+		try {
+			const errors = validationResult(req);
+			if (!errors.isEmpty()) {
+				return apiResponse.validationErrorWithData(res, "Validation Error", errors.array());
+			} else {
+				neo4j.searchUserByUsername(req.body.username).then(user => {
+					if(user){
+						bcrypt.compare(req.body.password, user.password, function(err, same) {
+							if (same){
+								neo4j.deleteUser(user)
+							}
+						})
+					} else {
+						return apiResponse.unauthorizedResponse(res, "Username or Password wrong.");
+					}
+				})
 			}
 		} catch (err) {
 			return apiResponse.ErrorResponse(res, err);
