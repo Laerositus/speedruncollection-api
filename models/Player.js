@@ -4,7 +4,7 @@ var Game = require("./Game");
 const Schema = mongoose.Schema;
 
 var PlayerSchema = new mongoose.Schema({
-	username: String,
+	playername: String,
 	totalRuns: Number,
 	creationDate: Date,
 	discord: String,

@@ -70,11 +70,6 @@ exports.register = [
 							return apiResponse.ErrorResponse(res, err);
 						}
 					});
-
-					// }).catch(err => {
-					// 	console.log(err);
-					// 	return apiResponse.ErrorResponse(res,err);
-					// }) ;
 				});
 			}
 		} catch (err) {
@@ -99,8 +94,6 @@ exports.login = [
 	body("password").isLength({
 		min: 1
 	}).trim().withMessage("Password must be specified."),
-	sanitizeBody("username").escape(),
-	sanitizeBody("password").escape(),
 	(req, res) => {
 		try {
 			const errors = validationResult(req);

@@ -4,8 +4,8 @@ var router = express.Router();
 
 router.post("/", PlayerController.playerStore);
 router.get("/", PlayerController.playerList);
-router.get("/:id", PlayerController.playerDetail);
-router.put("/:id", PlayerController.playerUpdate);
-router.delete("/:id", PlayerController.playerDelete);
+router.get("/:playername", PlayerController.playerDetail);
+router.put("/:", PlayerController.playerUpdate);
+router.delete("/:", PlayerController.playerDelete);
 
 module.exports = router;
