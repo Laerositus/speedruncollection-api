@@ -146,26 +146,13 @@ exports.playerUpdate = [
 
 exports.playerDelete = [
     function (req, res) {
-        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-            return apiResponse.validationErrorWithData(res, "Invalid Error.", "Invalid ID");
-        }
+        console.log(req.paarms.playername);
         try {
-            Player.findById(req.params.id, function (err, foundPlayer) {
-                if (foundPlayer === null) {
-                    return apiResponse.noContentResponse(res, "Player does not exist with this id");
-                } else {
-                    Player.findByIdndRemove(req.params.id, function (err, player) {
-                        if (err) {
-                            return apiResponse.ErrorResponse(res,err);
-                        } else {
-                            player.remove();
-                            return apiResponse.successResponse(res, "Player deleted successfully");
-                        }                    
-                    });
-                }
+            Player.findOne({playername: req.params.playername}, function(err, player) {
+                player = undefined;
             });
         } catch (err) {
-            return apiResponse.ErrorResponse(res, err);
+            console.log(err.message);
         }
     }
 ];

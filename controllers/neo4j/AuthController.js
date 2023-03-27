@@ -162,13 +162,13 @@ exports.delete = [
 					if(user){
 						bcrypt.compare(req.body.password, user.password, function(err, same) {
 							if (same){
-								neo4j.deleteUser(user)
+								neo4j.deleteUser(user);
 							}
-						})
+						});
 					} else {
 						return apiResponse.unauthorizedResponse(res, "Username or Password wrong.");
 					}
-				})
+				});
 			}
 		} catch (err) {
 			return apiResponse.ErrorResponse(res, err);
