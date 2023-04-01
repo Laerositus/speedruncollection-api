@@ -146,7 +146,7 @@ exports.playerUpdate = [
 
 exports.playerDelete = [
     function (req, res) {
-        console.log(req.paarms.playername);
+        console.log(req.params.playername);
         try {
             Player.findOne({playername: req.params.playername}, function(err, player) {
                 player = undefined;

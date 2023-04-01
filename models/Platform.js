@@ -1,5 +1,4 @@
 var mongoose = require("mongoose");
-const GameSchema = require("./Game");
 var Schema = mongoose.Schema;
 
 var PlatformSchema = new Schema({
@@ -9,10 +8,7 @@ var PlatformSchema = new Schema({
 	},
 	releaseDate: {
 		type: Date,
-	},
-	games: [{
-		type: Schema.Types.ObjectId, ref: "Game"
-	}]
+	}
 });
 
 module.exports = mongoose.model("Platform", PlatformSchema);
