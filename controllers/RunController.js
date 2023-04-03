@@ -6,7 +6,6 @@ var mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
 
 const Run = require("../models/Run");
-const Game = require("../models/Game");
 
 function RunData(data) {
 	this._id = data._id;
@@ -15,7 +14,6 @@ function RunData(data) {
 	this.platform = data.platform;
 	this.time = data.time;
 	this.player = data.player;
-	this.placement = data.placement;
 	this.videoLink = data.videoLink;
 }
 
@@ -33,7 +31,6 @@ exports.runStore = [
 				platform: req.body.platform,
 				time: req.body.time,
 				player: req.body.player,
-				placement: req.body.placement,
 				videoLink: req.body.videoLink
 			});
 

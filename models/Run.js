@@ -24,7 +24,6 @@ var RunSchema = new Schema({
 	player: {
 		type: String, ref: "Player",
 	},
-	placement: Number,
 	videoLink: String
 });
 
