@@ -12,8 +12,6 @@ function GameData(data) {
 	this.name = data.name;
 	this.releaseDate = data.releaseDate;
 	this.platforms = data.platforms;
-	this.totalRuns = data.totalRuns;
-	this.playerCount = data.playerCount;
 	this.gameRule = data.gameRule;
 	this.image = data.image;
 	this.categories = data.categories;
@@ -28,28 +26,24 @@ exports.gameStore = [
 	(req, res) => {	
 		try {
 			const errors = validationResult(req);
-			// console.log(req.body);
+
 			var game = new Game({
 				name: req.body.name,
 				gameRule: req.body.gameRule,
 				platforms: req.body.platforms,
 				releaseDate: req.body.releaseDate,
-				totalRuns: req.body.totalRuns,
-				playerCount: req.body.playerCount,
 				categories: req.body.categories,
 				image: req.body.image 
 			});
+			console.log(game.platforms);
 			
 			if (!errors.isEmpty()) {
 				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
 			} else {
-
 				//Save game.
+				
 				game.save(function (err) {
-					if (err) {
-						return apiResponse.ErrorResponse(res, err);
-					}
-					// console.log(game)
+					if (err) { return apiResponse.ErrorResponse(res, err);	}
 					let gameData = new GameData(game);
 					return apiResponse.successResponseWithData(res, "Game posted successfully.", gameData);
 				});
@@ -65,7 +59,7 @@ exports.gameStore = [
 exports.gameList = [
 	function (req, res) {
 		try {
-			Game.find({}, "_id name runs platforms image releaseDate categories totalRuns playerCount gameRule").then((games) => {
+			Game.find({}, "_id name runs platforms image releaseDate categories gameRule").then((games) => {
 				if (games.length > 0){
 					return apiResponse.successResponseWithData(res, "Operation Success", games);
 				}else {

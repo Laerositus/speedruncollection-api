@@ -22,9 +22,7 @@ exports.runStore = [
 	// sanitizeBody("*").escape(),
 	(req, res) => {	
 		try {
-			// console.log(req.body);
 			const errors = validationResult(req);
-			// console.log(req.body.player);
 			var run = new Run({
 				game: req.body.game,
 				category: req.body.category,
@@ -33,8 +31,6 @@ exports.runStore = [
 				player: req.body.player,
 				videoLink: req.body.videoLink
 			});
-
-			console.log(run);
 			
 			if (!errors.isEmpty()) {
 				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
