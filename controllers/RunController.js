@@ -61,7 +61,7 @@ exports.runList = [
 	function (req, res) {
 		try {
 			Run
-				.find({}, "_id game category time platform palyer placement videoLink")
+				.find({}, "_id game category time platform player placement videoLink")
 				.then((runs) => {
 					if(runs.length > 0) {
 						return apiResponse.successResponseWithData(res, "Operation success", runs);
