@@ -1,5 +1,4 @@
 var mongoose = require("mongoose");
-var Game = require("./Game");
 
 const Schema = mongoose.Schema;
 
@@ -13,5 +12,4 @@ var PlayerSchema = new mongoose.Schema({
 	youtube: String
 });
 
-module.exports = PlayerSchema;
 module.exports = mongoose.model("Player", PlayerSchema);

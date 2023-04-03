@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 const Platform = require("./Platform");
-const User = require("./Player");
+const Player = require("./Player");
 const Game = require("./Game");
 const Category = require("./Category");
 
@@ -13,12 +13,16 @@ var RunSchema = new Schema({
 	category: {
 		type: Schema.Types.ObjectId, ref: "Category"
 	},
-	time: String,
+	time: { 
+		hours: Number,
+		minutes: Number,
+		seconds: Number
+	},
 	platform: {
 		type: Schema.Types.ObjectId, ref: "Platform"
 	},
-	user: {
-		type: Schema.Types.ObjectId, ref: "User",
+	player: {
+		type: String, ref: "Player",
 	},
 	placement: Number,
 	videoLink: String

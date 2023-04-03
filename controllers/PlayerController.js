@@ -7,7 +7,6 @@ mongoose.set("useFindAndModify", false);
 const Player = require("../models/Player");
 
 function PlayerData(data) {
-    this._id = data._id;
     this.playername = data.playername;
     this.totalRuns = data.totalRuns;
     this.creationDate = data.creationDate;
@@ -68,7 +67,7 @@ exports.playerList = [
                 if (players.length > 0){
                     return apiResponse.successResponseWithData(res, "Operation Success", players);
                 } else {
-                    returnapiResponse.successResponseWithData(res, "Operation Success");
+                    return apiResponse.successResponseWithData(res, "Operation Success");
                 }
             });
         } catch (err) {

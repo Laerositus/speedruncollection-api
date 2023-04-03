@@ -22,7 +22,6 @@ exports.register = [
 	body("username").isLength({
 		min: 1
 	}).trim().withMessage("Username must be specified.")
-
 		.custom((value) => {
 			return neo4j.searchUserByUsername(value).then((user) => {
 				if (user) {
@@ -52,7 +51,6 @@ exports.register = [
 			} else {
 				//hash input password
 				bcrypt.hash(req.body.password, 10, function (err, hash) {
-
 					// Create User object with escaped and trimmed data
 					var user = new User(req.body.username, hash);
 
@@ -62,7 +60,7 @@ exports.register = [
 							username: user.username,
 							password: hash
 						};
-						// console.log(user)
+						// console.log(user);
 						return apiResponse.successResponseWithData(res, "Registration Success.", userData);
 					}).catch((err) => {
 						if (err) {

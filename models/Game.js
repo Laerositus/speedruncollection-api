@@ -19,9 +19,6 @@ var GameSchema = new Schema({
 		type: Category.schema
 	}],
 	gameRule: String,
-	runs: [{
-		type: Schema.Types.ObjectId, ref: "Run",
-	}],
 	image: String
 });
 
