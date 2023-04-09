@@ -100,20 +100,16 @@ exports.gameUpdate = [
 	(req, res) => {
 		try {
 			const errors = validationResult(req);
-			if(req.body.platforms !=[]){
 				var game = new Game({
 					_id: req.params.id,
 					name: req.body.name,
 					platforms: req.body.platforms,
 					releaseDate: req.body.releaseDate,
-					totalRuns: req.body.totalRuns,
-					playerCount: req.body.playerCount,
 					categories: req.body.categories,
 					gameRule: req.body.gameRule,
 					image: req.body.image
 				});
 
-				console.log(game);
 				if (!errors.isEmpty()) {
 					return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
 				} else {
@@ -121,16 +117,17 @@ exports.gameUpdate = [
 						return apiResponse.validationErrorWithData(res, "Invalid Error.", "Invalid ID");
 					} else {
 						Game.findById(req.params.id, function (err, foundGame) {
+							console.log(foundGame);
 							if (foundGame === null) {
+								console.log("No game found");
 								return apiResponse.noContentResponse(res, "Game does not exist with this id");
 							} else {							
 								//Update game.
-								// console.log(game)
 								Game.findByIdAndUpdate(req.params.id, game, {}, function (err) {								
 									if (err) {
+										console.log("Errors here");
 										return apiResponse.ErrorResponse(res, err);
 									} else {
-										// console.log(game);
 										let gameData = new GameData(game);
 										return apiResponse.successResponseWithData(res, "Game updated succesfully.", gameData);
 									}
@@ -139,7 +136,7 @@ exports.gameUpdate = [
 						});
 					}
 				}
-			}
+			
 		} catch (err) {
 			//Throw error in json response with status 500.
 			console.log(err);

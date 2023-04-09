@@ -99,16 +99,16 @@ exports.runUpdate = [
 		try {
 			const errors = validationResult(req);
 			var run = new Run({
-				_id: req.params.id,
-				name: req.body.name,
-				platforms: req.body.platforms,
-				releaseDate: req.body.releaseDate,
-				totalRuns: req.body.totalRuns,
-				playerCount: req.body.playerCount,
-				categories: req.body.categories,
-				runRule: req.body.runRule,
-				image: req.body.image
+				_id: req.body._id,
+				game: req.body.game,
+				category: req.body.category,
+				platform: req.body.platform,
+				time: req.body.time,
+				player: req.body.player,
+				videoLink: req.body.videoLink
 			});
+
+			console.log(run);
 
 			if (!errors.isEmpty()) {
 				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
