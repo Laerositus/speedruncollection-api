@@ -1,5 +1,4 @@
 var mongoose = require("mongoose");
-const Category = require("./Category.js");
 const Platform = require("./Platform.js");
 const Run = require("./Run.js");
 
@@ -9,17 +8,16 @@ var GameSchema = new Schema({
 	name: {
 		type: String
 	},
-	platforms: [ String ],
+	platforms: [ 
+		String
+	],
 	releaseDate: Date,
-	totalRuns: Number,
-	playerCount: Number,
 	categories: [{
-		type: Category.schema
+		_id: String,
+		name: String,
+		categoryRule: String
 	}],
 	gameRule: String,
-	runs: [{
-		type: Schema.Types.ObjectId, ref: "Run",
-	}],
 	image: String
 });
 

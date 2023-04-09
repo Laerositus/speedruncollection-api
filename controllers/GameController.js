@@ -12,8 +12,6 @@ function GameData(data) {
 	this.name = data.name;
 	this.releaseDate = data.releaseDate;
 	this.platforms = data.platforms;
-	this.totalRuns = data.totalRuns;
-	this.playerCount = data.playerCount;
 	this.gameRule = data.gameRule;
 	this.image = data.image;
 	this.categories = data.categories;
@@ -28,28 +26,24 @@ exports.gameStore = [
 	(req, res) => {	
 		try {
 			const errors = validationResult(req);
-			// console.log(req.body);
+
 			var game = new Game({
 				name: req.body.name,
 				gameRule: req.body.gameRule,
 				platforms: req.body.platforms,
 				releaseDate: req.body.releaseDate,
-				totalRuns: req.body.totalRuns,
-				playerCount: req.body.playerCount,
 				categories: req.body.categories,
 				image: req.body.image 
 			});
+			console.log(game.platforms);
 			
 			if (!errors.isEmpty()) {
 				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
 			} else {
-
 				//Save game.
+				
 				game.save(function (err) {
-					if (err) {
-						return apiResponse.ErrorResponse(res, err);
-					}
-					// console.log(game)
+					if (err) { return apiResponse.ErrorResponse(res, err);	}
 					let gameData = new GameData(game);
 					return apiResponse.successResponseWithData(res, "Game posted successfully.", gameData);
 				});
@@ -65,7 +59,7 @@ exports.gameStore = [
 exports.gameList = [
 	function (req, res) {
 		try {
-			Game.find({}, "_id name platforms image releaseDate categories totalRuns playerCount gameRule").then((games) => {
+			Game.find({}, "_id name runs platforms image releaseDate categories gameRule").then((games) => {
 				if (games.length > 0){
 					return apiResponse.successResponseWithData(res, "Operation Success", games);
 				}else {
@@ -106,20 +100,16 @@ exports.gameUpdate = [
 	(req, res) => {
 		try {
 			const errors = validationResult(req);
-			if(req.body.platforms !=[]){
 				var game = new Game({
 					_id: req.params.id,
 					name: req.body.name,
 					platforms: req.body.platforms,
 					releaseDate: req.body.releaseDate,
-					totalRuns: req.body.totalRuns,
-					playerCount: req.body.playerCount,
 					categories: req.body.categories,
 					gameRule: req.body.gameRule,
 					image: req.body.image
 				});
 
-				console.log(game);
 				if (!errors.isEmpty()) {
 					return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
 				} else {
@@ -127,16 +117,17 @@ exports.gameUpdate = [
 						return apiResponse.validationErrorWithData(res, "Invalid Error.", "Invalid ID");
 					} else {
 						Game.findById(req.params.id, function (err, foundGame) {
+							console.log(foundGame);
 							if (foundGame === null) {
+								console.log("No game found");
 								return apiResponse.noContentResponse(res, "Game does not exist with this id");
 							} else {							
 								//Update game.
-								// console.log(game)
 								Game.findByIdAndUpdate(req.params.id, game, {}, function (err) {								
 									if (err) {
+										console.log("Errors here");
 										return apiResponse.ErrorResponse(res, err);
 									} else {
-										// console.log(game);
 										let gameData = new GameData(game);
 										return apiResponse.successResponseWithData(res, "Game updated succesfully.", gameData);
 									}
@@ -145,7 +136,7 @@ exports.gameUpdate = [
 						});
 					}
 				}
-			}
+			
 		} catch (err) {
 			//Throw error in json response with status 500.
 			console.log(err);

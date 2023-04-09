@@ -11,7 +11,7 @@ function PlatformData(data) {
     this._id = data._id;
     this.name = data.name;
     this.releaseDate = data.releaseDate;
-    this.games = data.games;
+    // this.games = data.games;
 }
 
 exports.platformStore = [
@@ -51,9 +51,9 @@ exports.platformList = [
     // auth
     function (req, res)  {
 		try {
-			Platform.find({}, "_id name releaseDate games").then((games) => {
-				if (games.length > 0){
-					return apiResponse.successResponseWithData(res, "Operation Success", games);
+			Platform.find({}, "_id name releaseDate").then((platforms) => {
+				if (platforms.length > 0){
+					return apiResponse.successResponseWithData(res, "Operation Success", platforms);
 				}else {
 					return apiResponse.successResponseWithData(res, "Operation Success");
 				}

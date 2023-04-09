@@ -6,7 +6,6 @@ var mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
 
 const Run = require("../models/Run");
-const Game = require("../models/Game");
 
 function RunData(data) {
 	this._id = data._id;
@@ -14,8 +13,7 @@ function RunData(data) {
     this.category = data.category;
 	this.platform = data.platform;
 	this.time = data.time;
-	this.user = data.user;
-	this.placement = data.placement;
+	this.player = data.player;
 	this.videoLink = data.videoLink;
 }
 
@@ -25,22 +23,19 @@ exports.runStore = [
 	(req, res) => {	
 		try {
 			const errors = validationResult(req);
-			console.log(req.body);
 			var run = new Run({
 				game: req.body.game,
 				category: req.body.category,
 				platform: req.body.platform,
 				time: req.body.time,
-				user: req.body.user,
-				placement: req.body.placement,
+				player: req.body.player,
 				videoLink: req.body.videoLink
 			});
 			
 			if (!errors.isEmpty()) {
 				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
 			} else {
-
-				//Save run.
+				// Save run.
 				run.save(function (err) {
 					if (err) {
 						return apiResponse.ErrorResponse(res, err);
@@ -54,56 +49,27 @@ exports.runStore = [
 			console.log(err);
 			//Throw error in json response with status 500. 
 			return apiResponse.ErrorResponse(res, err);
-	    }
+		}
     }
 ];
 
 exports.runList = [
 	function (req, res) {
-		console.log(req.body);
-		if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-			return apiResponse.validationErrorWithData(res, "Invalid Error.", "Invalid Game ID");
-		} else {
-			Game.findById(req.params.id, function(err, foundGame) {
-				if (foundGame === null){
-					return apiResponse.noContentResponse(res, "Game does not exist with this id");
-				} else {
-					try {
-						const errors = validationResult(req);							
-						Run.find({}, "_id game platform user time placement category videoLink").then((runs) => {
-							if (runs.length > 0){
-								// console.log(runs);
-								return apiResponse.successResponseWithData(res, "Operation Success", runs);
-							}else {
-								return apiResponse.successResponseWithData(res, "Operation Success");
-							}
-						});
-					} catch (err) {
-						return apiResponse.ErrorResponse(res, err);
-					}
-				}
-			})
-		}
-		
-	}
-];
-
-exports.runsList = [
-	function (req, res) {
 		try {
-			Run.find({}, "_id game platform user time placement category videoLink").then((games) => {
-				if (games.length > 0){
-					// console.log(games);
-					return apiResponse.successResponseWithData(res, "Operation Success", games);
-				}else {
-					return apiResponse.successResponseWithData(res, "Operation Success");
-				}
-			});
+			Run
+				.find({}, "_id game category time platform player placement videoLink")
+				.then((runs) => {
+					if(runs.length > 0) {
+						return apiResponse.successResponseWithData(res, "Operation success", runs);
+					} else {
+						return apiResponse.successResponseWithData(res, "Operation success");
+					}
+				});
 		} catch (err) {
 			return apiResponse.ErrorResponse(res, err);
-		}
+		}		
 	}
-]
+];
 
 exports.runDetail = [
 	function (req, res) {
@@ -120,7 +86,7 @@ exports.runDetail = [
 				} else {
 					return apiResponse.noContentResponse(res, "Run does not exist with this id");
 				}
-			})
+			});
 		} catch (err) {
 			return apiResponse.ErrorResponse(res, err);
 		}
@@ -133,16 +99,16 @@ exports.runUpdate = [
 		try {
 			const errors = validationResult(req);
 			var run = new Run({
-				_id: req.params.id,
-				name: req.body.name,
-				platforms: req.body.platforms,
-				releaseDate: req.body.releaseDate,
-				totalRuns: req.body.totalRuns,
-				playerCount: req.body.playerCount,
-				categories: req.body.categories,
-				runRule: req.body.runRule,
-				image: req.body.image
+				_id: req.body._id,
+				game: req.body.game,
+				category: req.body.category,
+				platform: req.body.platform,
+				time: req.body.time,
+				player: req.body.player,
+				videoLink: req.body.videoLink
 			});
+
+			console.log(run);
 
 			if (!errors.isEmpty()) {
 				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
@@ -207,4 +173,4 @@ exports.runDelete = [
 			return apiResponse.ErrorResponse(res, err);
 		}
 	}
-]
+];

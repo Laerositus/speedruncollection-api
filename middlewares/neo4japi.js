@@ -19,7 +19,6 @@ exports.searchUserByUsername = function searchUserByUsername(username) {
 			
 		var session = driver.session();
 
-		console.log("Session is open: " + session._open);
 		session
 			.run(query)
 
@@ -39,7 +38,6 @@ exports.searchUserByUsername = function searchUserByUsername(username) {
 				reject(error);
 			});
 		});
-
 };
 
 exports.addUser = function addUser(user) {
@@ -82,6 +80,7 @@ exports.deleteUser = function deleteUser(user) {
 		session
 			.run(query)
 			.then((result) => {
+				console.log(result);
 				session.close();
 			}).catch((error) => {
 				console.log(error);

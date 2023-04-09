@@ -22,7 +22,6 @@ exports.register = [
 	body("username").isLength({
 		min: 1
 	}).trim().withMessage("Username must be specified.")
-
 		.custom((value) => {
 			return neo4j.searchUserByUsername(value).then((user) => {
 				if (user) {
@@ -52,7 +51,6 @@ exports.register = [
 			} else {
 				//hash input password
 				bcrypt.hash(req.body.password, 10, function (err, hash) {
-
 					// Create User object with escaped and trimmed data
 					var user = new User(req.body.username, hash);
 
@@ -62,7 +60,7 @@ exports.register = [
 							username: user.username,
 							password: hash
 						};
-						// console.log(user)
+						// console.log(user);
 						return apiResponse.successResponseWithData(res, "Registration Success.", userData);
 					}).catch((err) => {
 						if (err) {
@@ -70,11 +68,6 @@ exports.register = [
 							return apiResponse.ErrorResponse(res, err);
 						}
 					});
-
-					// }).catch(err => {
-					// 	console.log(err);
-					// 	return apiResponse.ErrorResponse(res,err);
-					// }) ;
 				});
 			}
 		} catch (err) {
@@ -99,8 +92,6 @@ exports.login = [
 	body("password").isLength({
 		min: 1
 	}).trim().withMessage("Password must be specified."),
-	sanitizeBody("username").escape(),
-	sanitizeBody("password").escape(),
 	(req, res) => {
 		try {
 			const errors = validationResult(req);
@@ -169,13 +160,13 @@ exports.delete = [
 					if(user){
 						bcrypt.compare(req.body.password, user.password, function(err, same) {
 							if (same){
-								neo4j.deleteUser(user)
+								neo4j.deleteUser(user);
 							}
-						})
+						});
 					} else {
 						return apiResponse.unauthorizedResponse(res, "Username or Password wrong.");
 					}
-				})
+				});
 			}
 		} catch (err) {
 			return apiResponse.ErrorResponse(res, err);

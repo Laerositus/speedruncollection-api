@@ -5,12 +5,9 @@ var mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
 
 const Player = require("../models/Player");
-const Game = require("../models/Game");
-const { gameDelete } = require("./GameController");
 
 function PlayerData(data) {
-    this._id = data._id;
-    this.username = data.username;
+    this.playername = data.playername;
     this.totalRuns = data.totalRuns;
     this.creationDate = data.creationDate;
     this.discord = data.discord;
@@ -20,14 +17,14 @@ function PlayerData(data) {
 }
 
 exports.playerStore = [
-    body("username", "Username must not be empty").isLength({
+    body("playername", "Playername must not be empty").isLength({
         min: 1
     }).trim(),
     (req, res) => {
         try {
             const errors = validationResult(req);
             var player = new Player({
-                username: req.body.username,
+                playername: req.body.playername,
                 totalRuns: req.body.totalRuns,
                 creationDate: req.body.creationDate,
                 discord: req.body.discord,
@@ -36,7 +33,15 @@ exports.playerStore = [
                 youtube: req.body.youtube
             });
 
+            Player.findOne({
+                playername: player.playername,
+            }).then((foundPlayer) => {
+                if(foundPlayer !== null)
+                    return apiResponse.ErrorResponse(res, "Player with name already exists");
+            });
+
             if (!errors.isEmpty()){
+                console.log(errors);
                 return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
             } else {
                 player.save(function (err) {
@@ -47,6 +52,7 @@ exports.playerStore = [
                     return apiResponse.successResponseWithData(res, "Player posted succesfully", playerData);
                 });
             }
+         
         } catch (err) {
             console.log(err);
             return apiResponse.ErrorResponse(res, err);
@@ -61,7 +67,7 @@ exports.playerList = [
                 if (players.length > 0){
                     return apiResponse.successResponseWithData(res, "Operation Success", players);
                 } else {
-                    returnapiResponse.successResponseWithData(res, "Operation Success");
+                    return apiResponse.successResponseWithData(res, "Operation Success");
                 }
             });
         } catch (err) {
@@ -72,19 +78,16 @@ exports.playerList = [
 
 exports.playerDetail = [
     function (req, res) {
-        console.log(req.params.id);
-        if(!mongoose.Types.ObjectId.isValdid(req.params.id)){
-            return apiResponse.validationErrorWithData(res, "Invalid Player ID", {});
-        }
+        console.log(req.params.playername);
         try {
             Player.findOne({
-                _id: req.params.id
+                playername: req.params.playername
             }).then((player) => {
                 if (player !== null) {
                     let playerData = new PlayerData(player);
                     return apiResponse.successResponseWithData(res, "Operation success", playerData);
                 } else {
-                    return apiResponse.noContentResponse(res, "Player does not exist with this id");
+                    return apiResponse.noContentResponse(res, "Player does not exist with this name");
                 }
             });
         } catch (err){
@@ -142,26 +145,13 @@ exports.playerUpdate = [
 
 exports.playerDelete = [
     function (req, res) {
-        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-            return apiResponse.validationErrorWithData(res, "Invalid Error.", "Invalid ID");
-        }
+        console.log(req.params.playername);
         try {
-            Player.findById(req.params.id, function (err, foundPlayer) {
-                if (foundPlayer === null) {
-                    return apiResponse.noContentResponse(res, "Player does not exist with this id");
-                } else {
-                    Player.findByIdndRemove(req.params.id, function (err, player) {
-                        if (err) {
-                            return apiResponse.ErrorResponse(res,err);
-                        } else {
-                            player.remove();
-                            return apiResponse.successResponse(res, "Player deleted successfully");
-                        }                    
-                    });
-                }
+            Player.findOne({playername: req.params.playername}, function(err, player) {
+                player = undefined;
             });
         } catch (err) {
-            return apiResponse.ErrorResponse(res, err);
+            console.log(err.message);
         }
     }
 ];
