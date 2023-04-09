@@ -111,12 +111,12 @@ exports.login = [
 								};
 								//Prepare JWT token for authentication
 								const jwtPayload = userData;
-								const jwtData = {
-									expiresIn: process.env.JWT_TIMEOUT_DURATION,
-								};
-								const secret = process.env.JWT_SECRET;
+// 								const jwtData = {
+// 									expiresIn: process.env.JWT_TIMEOUT_DURATION,
+// 								};
+// 								const secret = process.env.JWT_SECRET;
 								//Generated JWT token with Payload and secret.
-								userData.token = jwt.sign(jwtPayload, secret, jwtData);
+// 								userData.token = jwt.sign(jwtPayload, secret, jwtData);
 								return apiResponse.successResponseWithData(res, "Login Success.", userData);
 									
 							} else {
